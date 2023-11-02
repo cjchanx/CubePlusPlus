@@ -1,5 +1,12 @@
+<div align="center">
+<img alt="Cube++" src="https://github.com/cjchanx/CubePlusPlus/assets/78698227/c3764e36-0ced-4585-81e8-78a98a1e3723" width="425"/>
+</div>
+
+# Introduction
+
 # Setup Instructions 
 ## CubeIDE Project Setup
+- 
 
 ## IOC Setup
 ### Middleware Setup
