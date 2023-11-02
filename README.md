@@ -1,5 +1,5 @@
 <div align="center">
-<img alt="Cube++" src="https://github.com/cjchanx/CubePlusPlus/assets/78698227/c3764e36-0ced-4585-81e8-78a98a1e3723" width="425"/>
+<img alt="Cube++" src="https://github.com/cjchanx/CubePlusPlus/assets/78698227/dfabaff9-256e-4eab-af3e-347d9a78f100" width="380"/>
 </div>
 
 # Introduction
