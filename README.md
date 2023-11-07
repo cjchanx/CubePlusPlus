@@ -6,7 +6,7 @@
 
 # Setup Instructions 
 ## CubeIDE Project Setup
-- 
+- Create a new project for your specific chip and select C++ when it asks you for Language
 
 ## IOC Setup
 ### Middleware Setup
