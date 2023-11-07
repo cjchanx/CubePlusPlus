@@ -10,15 +10,15 @@
 
 ## IOC Setup
 ### Middleware Setup
-- Under Middleware enable FreeRTOS using `CMSIS_V1` (unless you are using a multi-core CPU in which case `CMSIS_V2` may be preferred
+- Under `Middleware and Software Packs` enable FreeRTOS using `CMSIS_V1` (unless you are using a multi-core CPU in which case `CMSIS_V2` may be preferred
 - Change the following values in config parameters
     - FreeRTOS Heap Size to fairly large (eg. 64KB on a 90KB RAM chip)
     - Minimum task size to at least 192 words
     - Under Software Timer Defines "USE_TIMERS" should be enabled
-- Under FreeRTOS > Advanced Settings
+- Under `Middleware and Software Packs` > FreeRTOS > Advanced Settings
     - Enable USE_NEWLIB_REENTRANT
 - Under Computing > CRC 
-	- Enable Activated
+    - Enable Activated
 
 ### IOC Peripheral Setup
 
