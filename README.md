@@ -1,5 +1,5 @@
 <div align="center">
-<img alt="Cube++" src="https://github.com/cjchanx/CubePlusPlus/assets/78698227/c3764e36-0ced-4585-81e8-78a98a1e3723" width="425"/>
+<img alt="Cube++" src="https://github.com/cjchanx/CubePlusPlus/assets/78698227/025c59ea-36be-4131-9b09-06c37ff81b52" width="300"/>
 </div>
 
 <a href="https://en.cppreference.com/w/" rel="CppReference">![Foo](https://user-images.githubusercontent.com/78698227/185344746-ace6a502-a9a3-43d6-9379-daad6f4ffcd3.svg)</a>
