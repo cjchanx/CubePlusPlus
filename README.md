@@ -42,9 +42,9 @@
 
 
 ## Cube++ Setup
-Clone the Cube++ repository into the root folder using one of these commands
+Add the Cube++ repository into the root folder as a submodule using one of these commands
 ```
-git clone <repo_link> Cube++
+git submodule add git@github.com:cjchanx/CubePlusPlus.git Cube++
 ```
 
 Please add the following to include paths:
