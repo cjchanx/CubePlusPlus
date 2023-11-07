@@ -12,6 +12,9 @@
 ![](https://img.shields.io/github/contributors/cjchanx/CubePlusPlus)
 
 # Introduction
+Cube++ simplifies the process of creating a C/C++ codebase for an STM32 microcontroller in STM32CubeIDE while fully supporting CubeIDE's native code generation. This project is intended to be a submodule in a CubeIDE project to give access to some useful C++ wrappers and a method of routing control from the C main.c file to the C++ codebase located in one dedicated folder to support cleaner code compared to mixing it with code generation, and preventing the need for constantly renaming `main.c` to `main.cpp` every time code generation happens. Please refer to the [Setup Instructions](#Setup-Instructions) below for a guide on how to setup the project with Cube++
+
+Cube++ is based on the core code of the [Student Organization for Aerospace Research's Avionics Software](https://github.com/StudentOrganisationForAerospaceResearch/AvionicsSoftware/tree/d3b55eb04511bf8b2d5ea3fb2d51fbd1329d9e81). As the codebase was originally intended for use in a specific way there are still updates to be made to improve compatability and capabilities.
 
 # Setup Instructions 
 ## CubeIDE Project Setup
