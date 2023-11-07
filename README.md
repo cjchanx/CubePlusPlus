@@ -19,9 +19,17 @@
     - Enable USE_NEWLIB_REENTRANT
 - Under Computing > CRC 
     - Enable Activated
+- Under `System Core` > SYS > Timebase Source
+    - Change the timebase source to a timer instead of SysTick (CubeIDE will recommend you do this upon code generation)
 
 ### IOC Peripheral Setup
+#### For UART Debug Line 
+(if not defining `DEBUG_DISABLED` as mentioned in the [Codebase Setup](#Codebase-Setup) section below)
 
+- Inside Pinout and Configuration > Connectivity
+    - Select a UART line for debug (if you choose to enable it) and set to Asynchronous mode with hardware flow control off
+- At the top select Project Manager tab, go to the Advanced Settings and select the UART line for debug under Driver Selector
+    - Change this UART line driver from `HAL` to `LL`
 
 
 ## Cube++ Setup
