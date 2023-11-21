@@ -12,7 +12,8 @@
 #include "cmsis_os.h"    // CMSIS RTOS definitions
 
 // Programmer Macros
-constexpr uint16_t ERRVAL = 0xDEAD;    // Error value for debugging
+constexpr uint16_t ERRVAL = 0xDEAD;    // 16-bit Error value for debugging
+constexpr uint32_t ERRVAL32 = 0xDEADBEEF; // 32-bit Error value for debugging
 
 // Math Macros and Conversions
 constexpr double MATH_PI = 3.14159265358979323846;
@@ -21,6 +22,9 @@ constexpr double MATH_PI = 3.14159265358979323846;
 #define MILLIG_TO_MPS2(millig) ((millig) * 9.80665f)    // Milli-g to m/s^2
 #define MILLIDPS_TO_RADPS(millidps) ((millidps) * 0.00017453292519943295769236907684886f)    // Milli-degrees per second to radians per second (PI/180/1000)
 #define LBS_TO_GRAMS(lbs) ((lbs) * 453.59237f)    // Pounds to grams
+#define MPS2_TO_MILLIG(mps2) ((mps2) / 9.80665f)    // m/s^2 to Milli-g
+#define RADPS_TO_MILLIDPS(radps) ((radps) / 0.00017453292519943295769236907684886f)    // radians per second to Milli-degrees per second (PI/180/1000)
+#define GRAMS_TO_LBS(grams) ((grams) / 453.59237f)    // grams to pounds
 #define GET_COBS_MAX_LEN(len) (((len) + ((len) / 254) + 1) + 1)    // Get the max length of a COBS encoded string, we add 1 for the 0x00 delimiter
 
 // Conversion macros (SYSTEM)
