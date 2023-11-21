@@ -39,9 +39,9 @@ constexpr uint32_t MAX_DELAY_TICKS = portMAX_DELAY;
 namespace Utils
 {
     // Arrays
-    uint16_t averageArray(uint16_t array[], int size);
-    void writeInt32ToArray(uint8_t* array, int startIndex, int32_t value);
-    void readUInt32FromUInt8Array(uint8_t* array, int startIndex, int32_t* value);
+    uint32_t averageArray(uint16_t array[], int size);
+    void writeInt32ToArrayBigEndian(uint8_t* array, int startIndex, int32_t value);
+    int32_t readInt32FromArrayBigEndian(uint8_t* array, int startIndex);
 
     // CRC
     uint32_t getCRC32Aligned(uint8_t* data, uint32_t size);
