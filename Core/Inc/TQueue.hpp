@@ -26,11 +26,11 @@
 
 /* Class -----------------------------------------------------------------*/
 template<typename T>
-class Queue {
+class TQueue {
 public:
     //Constructors
-    Queue(void);
-    Queue(uint16_t depth);
+    TQueue(void);
+    TQueue(uint16_t depth);
 
     //Functions
     bool Send(T& item);
@@ -54,7 +54,7 @@ protected:
 };
 
 template<typename T>
-Queue<T>::Queue(void)
+TQueue<T>::TQueue(void)
 {
     //Initialize RTOS Queue handle
     rtQueueHandle = xQueueCreate(DEFAULT_QUEUE_SIZE, sizeof(T));
@@ -62,7 +62,7 @@ Queue<T>::Queue(void)
 }
 
 template<typename T>
-Queue<T>::Queue(uint16_t depth)
+TQueue<T>::TQueue(uint16_t depth)
 {
     //Initialize RTOS Queue handle with given depth
     rtQueueHandle = xQueueCreate(depth, sizeof(T));
@@ -70,7 +70,7 @@ Queue<T>::Queue(uint16_t depth)
 }
 
 template<typename T>
-bool Queue<T>::SendFromISR(T& item)
+bool TQueue<T>::SendFromISR(T& item)
 {
     if (xQueueSendFromISR(rtQueueHandle, &item, NULL) == pdPASS)
         return true;
@@ -79,7 +79,7 @@ bool Queue<T>::SendFromISR(T& item)
 }
 
 template<typename T>
-bool Queue<T>::SendToFront(T& item)
+bool TQueue<T>::SendToFront(T& item)
 {
     if (xQueueSendToFront(rtQueueHandle, &item, DEFAULT_QUEUE_SEND_WAIT_TICKS) == pdPASS)
         return true;
@@ -88,7 +88,7 @@ bool Queue<T>::SendToFront(T& item)
 }
 
 template<typename T>
-bool Queue<T>::Send(T& item)
+bool TQueue<T>::Send(T& item)
 {
     if (xQueueSend(rtQueueHandle, &item, DEFAULT_QUEUE_SEND_WAIT_TICKS) == pdPASS)
         return true;
@@ -97,7 +97,7 @@ bool Queue<T>::Send(T& item)
 }
 
 template<typename T>
-bool Queue<T>::Receive(T& item, uint32_t timeout_ms)
+bool TQueue<T>::Receive(T& item, uint32_t timeout_ms)
 {
     if(xQueueReceive(rtQueueHandle, &item, MS_TO_TICKS(timeout_ms)) == pdTRUE) {
         return true;
@@ -106,7 +106,7 @@ bool Queue<T>::Receive(T& item, uint32_t timeout_ms)
 }
 
 template<typename T>
-bool Queue<T>::ReceiveWait(T& item)
+bool TQueue<T>::ReceiveWait(T& item)
 {
     if (xQueueReceive(rtQueueHandle, &item, HAL_MAX_DELAY) == pdTRUE) {
         return true;
