@@ -4,12 +4,12 @@
 ### 1 Changing STM32 UART Line from HAL to UART
 - First ensure the .ioc indicates the UART line is enabled
 - Second go to the **Project Manager** tab at the top, under UART select the UART lines you want to use the driver and change them to use the LL library.
-- Lastly ensure the UART Global Interrupt for any lines you want to use the driverfor is enabled
+- Lastly ensure the UART Global Interrupt for any lines you want to use the driver for is enabled
 
-### Defining and Initializing UART Driver Instances
+### 2 Defining and Initializing UART Driver Instances
 
-Inside a .hpp file setup something like this, with names/number of drivers changed for however many uart lines you want
-I recommended setting up a section for aliases so you can reference a driver simply by doing UART::Debug-> for example
+- Inside a .hpp file setup something like this, with names/number of drivers changed for however many uart lines you want
+- I recommended setting up a section for aliases so you can reference a driver simply by doing UART::Debug-> for example
 ```C++
 /* UART Driver Instances ------------------------------------------------------------------*/
 class UARTDriver;
@@ -83,10 +83,20 @@ void cpp_USART5_IRQHandler();
 
 ```
 
-In this case you must call cpp_USART5_IRQHandler() inside Core/Src/stm32##xx_it.c where ## is the processor family
-eg)
+In this case you must call cpp_USART5_IRQHandler() inside Core/Src/stm32##xx_it.c where ## is the processor family. For example:
 ```C++
+/**
+  * @brief This function handles USART2 global interrupt.
+  */
+void USART2_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART2_IRQn 0 */
 
+  /* USER CODE END USART2_IRQn 0 */
+  /* USER CODE BEGIN USART2_IRQn 1 */
+  cpp_USART2_IRQHandler();
+  /* USER CODE END USART2_IRQn 1 */
+}
 ```
 
 
