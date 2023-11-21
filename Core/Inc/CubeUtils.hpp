@@ -39,7 +39,7 @@ constexpr uint32_t MAX_DELAY_TICKS = portMAX_DELAY;
 namespace Utils
 {
     // Arrays
-    uint32_t averageArray(uint16_t array[], int size);
+    uint16_t averageArray(uint16_t array[], int size);
     void writeInt32ToArrayBigEndian(uint8_t* array, int startIndex, int32_t value);
     int32_t readInt32FromArrayBigEndian(uint8_t* array, int startIndex);
 
