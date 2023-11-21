@@ -61,7 +61,7 @@ bool UARTDriver::ReceiveIT(uint8_t* charBuf, UARTReceiverBase* receiver)
 }
 
 /**
- * @brief Clears any error flags that may have been set, printing a warning message if necessary
+ * @brief Clears any error flags that may have been set
  * @return true if flags had to be cleared, false otherwise
  */
 bool UARTDriver::HandleAndClearRxError()
