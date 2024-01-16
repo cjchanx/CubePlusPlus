@@ -45,6 +45,9 @@ public:
     uint16_t GetQueueMessageCount() const { return uxQueueMessagesWaiting(rtQueueHandle); }
     uint16_t GetQueueDepth() const { return queueDepth; }
 
+    bool IsEmpty() const { return GetQueueMessageCount() == 0; }
+    bool IsFull() const { return GetQueueMessageCount() == queueDepth; }
+
 protected:
     //RTOS
     QueueHandle_t rtQueueHandle;    // RTOS Event Queue Handle

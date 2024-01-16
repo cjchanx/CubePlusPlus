@@ -147,5 +147,4 @@ int32_t Utils::stringToLong(const char* str)
     }
 
     return result;
-
 }
