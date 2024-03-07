@@ -61,13 +61,14 @@ void CubeTask::HandleCommand(Command& cm)
         switch (cm.GetTaskCommand()) {
         case CUBE_TASK_COMMAND_SEND_DEBUG:
 #ifndef DISABLE_DEBUG
-                DEFAULT_DEBUG_UART_DRIVER->Transmit(cm.GetDataPointer(), cm.GetDataSize());
+			DEFAULT_DEBUG_UART_DRIVER->Transmit(cm.GetDataPointer(), cm.GetDataSize());
 #endif
             break;
         default:
             CUBE_PRINT("CUBETask - Received Unsupported DATA_COMMAND {%d}\n", cm.GetTaskCommand());
             break;
         }
+        break;
     default:
         CUBE_PRINT("CUBETask - Received Unsupported Command {%d}\n", cm.GetCommand());
         break;
