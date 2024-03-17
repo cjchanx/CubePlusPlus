@@ -57,6 +57,9 @@ namespace Utils
     // String to number conversion
     int32_t stringToLong(const char* str);
 
+    // Debug functionality
+    int32_t ExtractIntParameter(const char* msg, uint16_t identifierLen);
+
 
 }
 

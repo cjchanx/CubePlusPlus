@@ -147,5 +147,39 @@ int32_t Utils::stringToLong(const char* str)
     }
 
     return result;
-
 }
+
+/**
+ * @brief Extracts an integer parameter from a string
+ * @brief msg Message to extract from, MUST be at least identifierLen long, and properly null terminated
+ * @brief identifierLen Length of the identifier eg. 'rsc ' (Including the space) is 4
+ * 
+ * @example  if (strncmp(msg, "rsc ", 4) == 0) { // Notice the 4 here coresponds to the 4 in ExtractIntParameter
+ *               // Get parameter
+ *              int32_t state = ExtractIntParameter(msg, 4);
+ *
+ *              // Error check the state variable (confine to parameters)
+ *              if (state != ERRVAL && state > 0 && state < UINT16_MAX) {
+ *                  // Do something with the 'state' variable
+ *              }
+ *           }
+ * 
+ * @return ERRVAL on failure, otherwise the extracted value
+ */
+int32_t Utils::ExtractIntParameter(const char* msg, uint16_t identifierLen)
+{
+    // Handle a command with an int parameter at the end
+    if (static_cast<uint16_t>(strlen(msg)) < identifierLen+1) {
+        CUBE_PRINT("Int parameter insufficient length\r\n");
+        return ERRVAL;
+    }
+    
+    // Extract the value and attempt conversion to integer
+    const int32_t val = Utils::stringToLong(&msg[identifierLen]);
+    if (val == ERRVAL) {
+        CUBE_PRINT("Int parameter invalid value\r\n");
+    }
+
+    return val;
+}
+
