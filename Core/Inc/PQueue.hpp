@@ -73,6 +73,7 @@ private:
     TQueue<uint8_t> rtQueue_;
     etl::priority_queue<PriorityQueueItem, SIZE> etlQueue_;
     Mutex mtx_;
+    uint16_t seqN_;
 
     uint8_t errCount_;
 };
@@ -89,6 +90,7 @@ PQueue<T, SIZE>::PQueue() :
     rtQueue_(SIZE)
  {
     errCount_ = 0;
+    seqN_ = 0;
  }
 
 /**
