@@ -120,6 +120,9 @@ bool PQueue<T, SIZE>::Send(const T& item, uint8_t priority) {
     // Push an item to the RTOS queue
     NotifySelf();
 
+    // Unlock the priority queue mutex
+    mtx_.Unlock();
+
     return true;
 }
 
@@ -154,6 +157,9 @@ bool PQueue<T, SIZE>::Receive(T& item, uint32_t timeout_ms) {
     // Get the item from the etlQueue and pop it
     item = etlQueue_.top().data_;
     etlQueue_.pop();
+
+    // Unlock the priority queue mutex
+    mtx_.Unlock();
 
     return true;
 }
