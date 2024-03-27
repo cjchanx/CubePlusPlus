@@ -64,9 +64,15 @@ private:
     struct PriorityQueueItem {
         T data_;
         uint8_t priority_;
+        uint16_t order_;
 
         bool operator<(const PriorityQueueItem& other) const {
-            return priority_ < other.priority_;
+            if(priority_ == other.priority_) {
+                return order_ > other.order_;
+            }
+            else {
+                return priority_ < other.priority_;
+            }
         }
     };
 
@@ -115,7 +121,10 @@ bool PQueue<T, SIZE>::Send(const T& item, uint8_t priority) {
     }
 
     // Push an item to the priority queue
-    etlQueue_.push({item, priority});
+    etlQueue_.push({item, priority, seqN_});
+
+    // Update the sequence number
+    seqN_ += 1;
 
     // Push an item to the RTOS queue
     NotifySelf();
@@ -157,6 +166,9 @@ bool PQueue<T, SIZE>::Receive(T& item, uint32_t timeout_ms) {
     // Get the item from the etlQueue and pop it
     item = etlQueue_.top().data_;
     etlQueue_.pop();
+
+    // If the queue is now empty, we can reset the sequence number
+    if(IsEmpty()) { seqN_ = 0; }
 
     // Unlock the priority queue mutex
     mtx_.Unlock();
