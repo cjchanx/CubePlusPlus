@@ -103,6 +103,7 @@ template<typename T, const size_t SIZE>
 bool PQueue<T, SIZE>::Send(const T& item, uint8_t priority) {
     // If we cannot acquire the priority queue mutex, do nothing
     if(!mtx_.Lock(DEFAULT_PQUEUE_MTX_TIMEOUT_MS)) {
+        CUBE_PRINT("Mutex is gone...\n");
         return false;
     }
 
