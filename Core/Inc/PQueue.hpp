@@ -185,7 +185,7 @@ bool PQueue<T, SIZE>::Receive(T& item, uint32_t timeout_ms) {
  */
 template<typename T, const size_t SIZE>
 bool PQueue<T, SIZE>::ReceiveWait(T& item) {
-    return Receive(item, TICKS_TO_MS(HAL_MAX_DELAY)); 
+    return Receive(item, TICKS_TO_MS(HAL_MAX_DELAY)); // NOTE: Delay is only 1Hr and 6Min 
 }
 
 /**
