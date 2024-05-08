@@ -1,10 +1,37 @@
 /**
  ******************************************************************************
  * File Name          : PQueue.hpp
+ * 
+ * Configuration      : Define macros in SystemDefines.hpp
+ *    #define PQUEUE_ERROR_COUNT_MAX <int> - Max errors before assert
+ *    #define PQUEUE_SEQN_TYPE <type> - Sequence number type
+ *    #define PQUEUE_DISABLE_SEQN_CIRCULAR_CHECK - Disable 
+ *      sequence number circular check, saves +4/8B (pointer size) overhead
+ *      per item, but reduces protection against sequence number wrap-around
+ * 
  * Description        :
- *
- *    PQueue is a wrapper for RTOS xQueues and ETL Priority Queues to ensure
- *    proper signaling and functionality within FreeRTOS
+ *    PQueue is a wrapper for FreeRTOS Queues and ETL Priority Queues to
+ *    allow proper signaling within FreeRTOS
+ * 
+ *    This priority queue is intended to be used for task event signaling and
+ *    prioritization and maintains FIFO ordering within each priority level.
+ * 
+ *    If FIFO ordering and RTOS signaling is not required, consider using the
+ *    ETL priority queue directly.
+ * 
+ *    Note: In order to maintain FIFO ordering, a sequence number is used in 
+ *    each queue item. Note that the sequence number will wrap around. This is
+ *    handled by the comparison operator in the PriorityQueueItem struct,
+ *    however it assumes that the sequence number will not wrap around twice
+ *    before all items in the previous wrap-around have been received from 
+ *    the queue. By default a 16-bit sequence number is used, which should
+ *    be a reasonable trade-off for most applications. The sequence number type
+ *    can be configured by defining PQUEUE_SEQN_TYPE in SystemDefines
+ * 
+ * Future Improvements :
+ *   - Implementing the priority queue directly (not ETL) would allow the sequence
+ *   number check to be integrated into the class itself, removing the per-item
+ *   overhead of the sequence number pointer.
  ******************************************************************************
 */
 #ifndef CUBE_PLUSPLUS_INCLUDE_PRIORITY_QUEUE_H
@@ -18,7 +45,7 @@
 #include "SystemDefines.hpp"
 
 /* Constants and Definitions -------------------------------------------------*/
-constexpr uint32_t DEFAULT_PQUEUE_MTX_TIMEOUT_MS = 250; // Mutex Timeout
+constexpr uint32_t PQUEUE_MTX_TIMEOUT_MS = 250; // Mutex Timeout
 constexpr uint8_t RTQUEUE_ITEM = 1; // RTOS Queue Holder Item
 enum Priority : uint8_t {
     HIGH = 200,   // 200 so +- ~50 for fine adjustment
@@ -30,10 +57,18 @@ enum Priority : uint8_t {
 };
 
 /* User Configurable Defines -------------------------------------------------*/
-#ifndef DEFAULT_PQUEUE_ERROR_COUNT_MAX
-#define DEFAULT_PQUEUE_ERROR_COUNT_MAX 10
+#ifndef PQUEUE_ERROR_COUNT_MAX // Maximum number of errors before assert
+#define PQUEUE_ERROR_COUNT_MAX 10
+#endif
+#ifndef PQUEUE_SEQN_TYPE // Sequence number type
+#define PQUEUE_SEQN_TYPE uint16_t
+#endif
+#ifndef PQUEUE_DISABLE_SEQN_CIRCULAR_CHECK // Disable sequence number circular check 
+#define PQUEUE_ENABLE_SEQN_CIRCULAR_CHECK // (uses +4/8B (pointer size) overhead per item)
 #endif
 
+/* Macros --------------------------------------------------------------------*/
+typedef PQUEUE_SEQN_TYPE seq_t;
 
 /* Class ---------------------------------------------------------------------*/
 /**
@@ -47,7 +82,7 @@ class PQueue {
 public:
     PQueue();
 
-    bool Send(const T& item, uint8_t priority = Priority::NORMAL);
+    bool Send(const T& item, uint8_t priority = Priority::NORMAL); // Intentionally uint8_t to allow Priority::NORMAL+1 for example
     bool Receive(T& item, uint32_t timeout_ms = 0);
     bool ReceiveWait(T& item);
 
@@ -64,15 +99,43 @@ private:
     struct PriorityQueueItem {
         T data_;
         uint8_t priority_;
+        seq_t order_;
+#ifdef PQUEUE_ENABLE_SEQN_CIRCULAR_CHECK
+        const seq_t* pSeqN_;
+#endif
 
         bool operator<(const PriorityQueueItem& other) const {
-            return priority_ < other.priority_;
+            if(priority_ == other.priority_) {
+#ifdef PQUEUE_ENABLE_SEQN_CIRCULAR_CHECK
+                CUBE_ASSERT(pSeqN_ != nullptr, "PQueue null seqn pointer");
+                seq_t seqN = *pSeqN_;
+                if((order_ < seqN && other.order_ < seqN) ||
+                   (order_ >= seqN && other.order_ >= seqN)) {
+                    // Both are before wrap-around or after wrap-around
+                    return order_ > other.order_;
+                }
+                else if(order_ < seqN) {
+                    // This is after wrap-around, other is before
+                    return true;
+                }
+                else {
+                    // This is before wrap-around, other is after
+                    return false;
+                }
+#else
+                return order_ > other.order_;
+#endif
+            }
+            else {
+                return priority_ < other.priority_;
+            }
         }
     };
 
     TQueue<uint8_t> rtQueue_;
     etl::priority_queue<PriorityQueueItem, SIZE> etlQueue_;
     Mutex mtx_;
+    seq_t seqN_;
 
     uint8_t errCount_;
 };
@@ -89,6 +152,7 @@ PQueue<T, SIZE>::PQueue() :
     rtQueue_(SIZE)
  {
     errCount_ = 0;
+    seqN_ = 0;
  }
 
 /**
@@ -102,7 +166,7 @@ PQueue<T, SIZE>::PQueue() :
 template<typename T, const size_t SIZE>
 bool PQueue<T, SIZE>::Send(const T& item, uint8_t priority) {
     // If we cannot acquire the priority queue mutex, do nothing
-    if(!mtx_.Lock(DEFAULT_PQUEUE_MTX_TIMEOUT_MS)) {
+    if(!mtx_.Lock(PQUEUE_MTX_TIMEOUT_MS)) {
         return false;
     }
 
@@ -112,7 +176,14 @@ bool PQueue<T, SIZE>::Send(const T& item, uint8_t priority) {
     }
 
     // Push an item to the priority queue
-    etlQueue_.push({item, priority});
+#ifdef PQUEUE_ENABLE_SEQN_CIRCULAR_CHECK
+    etlQueue_.push({item, priority, seqN_, &seqN_});
+#else
+    etlQueue_.push({item, priority, seqN_});
+#endif
+
+    // Update the sequence number
+    seqN_ += 1;
 
     // Push an item to the RTOS queue
     NotifySelf();
@@ -140,7 +211,7 @@ bool PQueue<T, SIZE>::Receive(T& item, uint32_t timeout_ms) {
     }
 
     // If we failed to acquire the priority queue mutex, you must add another item to the rtos queue to ensure size consistency
-	if(!mtx_.Lock(DEFAULT_PQUEUE_MTX_TIMEOUT_MS)) {
+	if(!mtx_.Lock(PQUEUE_MTX_TIMEOUT_MS)) {
 		NotifySelf();
 		return false;
 	}
@@ -154,6 +225,11 @@ bool PQueue<T, SIZE>::Receive(T& item, uint32_t timeout_ms) {
     // Get the item from the etlQueue and pop it
     item = etlQueue_.top().data_;
     etlQueue_.pop();
+
+    // If the queue is now empty, we can reset the sequence number
+    if(IsEmpty()) { 
+        seqN_ = 0;
+    }
 
     // Unlock the priority queue mutex
     mtx_.Unlock();
@@ -170,7 +246,7 @@ bool PQueue<T, SIZE>::Receive(T& item, uint32_t timeout_ms) {
  */
 template<typename T, const size_t SIZE>
 bool PQueue<T, SIZE>::ReceiveWait(T& item) {
-    return Receive(item, TICKS_TO_MS(HAL_MAX_DELAY)); 
+    return Receive(item, TICKS_TO_MS(HAL_MAX_DELAY));
 }
 
 /**
@@ -194,8 +270,8 @@ void PQueue<T, SIZE>::HandleConsistencyError() {
     CUBE_PRINT("ERROR: PQueue Data Consistency\r\n");
 
     // Count the error, if it exceeds the max, we must reset the system
-    CUBE_ASSERT(++errCount_ > DEFAULT_PQUEUE_ERROR_COUNT_MAX,
-			"PQueue data consistency faults exceeded limits\r\n");
+    CUBE_ASSERT(++errCount_ > PQUEUE_ERROR_COUNT_MAX,
+			"PQueue data consistency faults exceeded limits");
 
     // Pop/Add items to the RT queue until it matches that of the priority queue
     uint16_t pQueueSize = etlQueue_.size();
