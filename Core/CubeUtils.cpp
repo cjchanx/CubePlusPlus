@@ -15,9 +15,9 @@
  * @brief Calculates the average from a list of unsigned shorts
  * @param array: The array of unsigned shorts to average
  * @param size: The size of the array
- * @return Returns the average as a uint32_t
+ * @return Returns the average as a uint16_t
  */
-uint32_t Utils::averageArray(uint16_t array[], int size)
+uint16_t Utils::averageArray(uint16_t array[], int size)
 {
     uint32_t sum = 0;
 
