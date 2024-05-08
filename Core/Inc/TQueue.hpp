@@ -3,7 +3,7 @@
  * File Name          : TQueue.hpp
  * Description        :
  *
- *    Queue is a wrapper for RTOS xQueues for use in C++.
+ *    Queue is a wrapper for FreeRTOS Queues for use in C++.
  *    with an internal queue handle and queue depth.
  * 
  *    This is an alternative version of Queue.hpp which allows for a template argument,
