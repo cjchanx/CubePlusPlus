@@ -39,13 +39,13 @@ constexpr uint32_t MAX_DELAY_TICKS = portMAX_DELAY;
 namespace Utils
 {
     // Arrays
-    uint16_t averageArray(uint16_t array[], int size);
-    void writeInt32ToArrayBigEndian(uint8_t* array, int startIndex, int32_t value);
-    int32_t readInt32FromArrayBigEndian(uint8_t* array, int startIndex);
+    uint16_t AverageArray(uint16_t array[], int size);
+    void WriteInt32ToArrayBigEndian(uint8_t* array, int startIndex, int32_t value);
+    int32_t ReadInt32FromArrayBigEndian(uint8_t* array, int startIndex);
 
     // CRC
-    uint32_t getCRC32Aligned(uint8_t* data, uint32_t size);
-    uint16_t getCRC16(uint8_t* data, uint16_t size);
+    uint32_t GetCRC32Aligned(uint8_t* data, uint32_t size);
+    uint16_t GetCRC16(uint8_t* data, uint16_t size);
 
     bool IsCrc16Correct(uint8_t* data, uint16_t size, uint16_t crc);
 
@@ -55,7 +55,7 @@ namespace Utils
     inline bool IsAsciiLowercase(uint8_t c) { return (c >= 'a' && c <= 'z'); }
 
     // String to number conversion
-    int32_t stringToLong(const char* str);
+    int32_t StringToLong(const char* str);
 
     // Debug functionality
     int32_t ExtractIntParameter(const char* msg, uint16_t identifierLen);
