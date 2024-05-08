@@ -26,13 +26,11 @@ public:
         qEvtQueue_ = new PQueue<Command,DEPTH>();
     }
 
-    void InitTask() {
-        
-    }
+    virtual void InitTask() = 0; 
 
     PQueue<Command, DEPTH>* GetEventQueue() const { return qEvtQueue_; }
-    void SendCommand(Command cmd) { qEvtQueue->Send(cmd); }
-    void SendCommandReference(Command& cmd) { qEvtQueue->Send(cmd); }
+    void SendCommand(Command cmd, uint8_t priority) { qEvtQueue->Send(cmd, priority); }
+    void SendCommandReference(Command& cmd, uint8_t priority) { qEvtQueue->Send(cmd, priority); }
 
 protected:
     //RTOS
