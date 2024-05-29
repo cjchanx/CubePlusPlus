@@ -68,10 +68,11 @@ void CubeTask::HandleCommand(Command& cm)
             CUBE_PRINT("CUBETask - Received Unsupported DATA_COMMAND {%d}\n", cm.GetTaskCommand());
             break;
         }
+        break;
+    }
     default:
         CUBE_PRINT("CUBETask - Received Unsupported Command {%d}\n", cm.GetCommand());
         break;
-    }
     }
 
     //No matter what we happens, we must reset allocated data
