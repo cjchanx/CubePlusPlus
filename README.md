@@ -19,7 +19,7 @@ Cube++ is based on the core code of the [Student Organization for Aerospace Rese
 # Setup Instructions 
 1. [CubeIDE Project Setup](#CubeIDE-Project-Setup)
 2. [IOC Setup](#IOC-Setup)
-3. [Cube++ Submodule Setup](#Cube++-Setup)
+3. [Cube++ Submodule Setup](#Cube-Setup)
 4. [Codebase Setup](#Codebase-Setup)
 
 ## CubeIDE Project Setup
@@ -84,13 +84,15 @@ Please ensure the following folders are not in the exclude from build option:
 (right click on the folder, select properties, select configuration 'all configuration' and untick "select `Exclude Resource from Build`")
 
 ### Codebase Setup
+An example project utilizing Cube++ with basic CUBE_PRINT support, in addition to a Debug receive task for parsing input data on the debug line can be found at https://github.com/cjchanx/cubeplusplus-examples/tree/main/Basic_Debug
+
 - It is recommended to setup a new folder called `Components` or `Modules` in the root where all the code goes.
 - There are a few files that you should have in `Components`/`Modules`:
-	- SystemDefines.hpp : An example can be found TODO
-	- main_system.cpp   : This can be named anything you want, but should contain the run_main() function that is the entry point for your codebase, example TODO
-	- main_system.hpp   : Header file for main_system.cpp, example TODO
-	- Core/Inc/RunInterface.hpp : Header file for the run interface which allows C code to call into the C++ codebase without errors, example TODO
-	- Core/RunInterface.cpp : Code file for the run interface, example TODO
+	- SystemDefines.hpp : An example can be found [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/SystemDefines.hpp)
+	- main_system.cpp   : This can be named anything you want, but should contain the run_main() function that is the entry point for your codebase, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/main_system.cpp)
+	- main_system.hpp   : Header file for main_system.cpp, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/main_system.hpp)
+	- Core/Inc/RunInterface.hpp : Header file for the run interface which allows C code to call into the C++ codebase without errors, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/Core/Inc/RunInterface.hpp)
+	- Core/RunInterface.cpp : Code file for the run interface, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/Core/RunInterface.cpp)
 - Setup Debug UART
 	- Setup one UART line as the UART debug line by following theinstructions uder Cube++/Drivers/UARTDriver_README.md, this should correspond to UART Driver linked to the 
 	`constexpr UARTDriver* const DEFAULT_DEBUG_UART_DRIVER = UART::Debug;` line that is required to be in the SystemDefines.hpp file
