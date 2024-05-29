@@ -69,19 +69,25 @@ Open the `.ioc` file by double clicking on it inside the project
 
 ## Cube++ Setup
 Add the Cube++ repository into the root folder as a submodule using one of these commands
+
+SSH
 ```
 git submodule add git@github.com:cjchanx/CubePlusPlus.git Cube++
+```
+HTTPS
+```
+git submodule add https://github.com/cjchanx/cubeplusplus-examples.git Cube++
 ```
 
 Please add the following to include paths:
 (right click on the folder and select `Add/Remove Include Path...`)
 - Cube++/Core
-- Cube++/System/Inc
 - Cube++/Drivers/Inc
 - Cube++/Libraries/embedded-template-library/include
 
 Please ensure the following folders are not in the exclude from build option:
 (right click on the folder, select properties, select configuration 'all configuration' and untick "select `Exclude Resource from Build`")
+- (none for this version)
 
 ### Codebase Setup
 An example project utilizing Cube++ with basic CUBE_PRINT support, in addition to a Debug receive task for parsing input data on the debug line can be found at https://github.com/cjchanx/cubeplusplus-examples/tree/main/Basic_Debug
