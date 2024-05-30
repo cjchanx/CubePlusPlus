@@ -114,3 +114,9 @@ An example project utilizing Cube++ with basic CUBE_PRINT support, in addition t
 	- Then inside `USER CODE BEGIN 3` after the `}` you want to put an `#endif`
 	- This ensures that the only tasks that will be started up are the ones you add to your run_main() function
  
+
+# Solving Issues
+## Components/Cube++ excluded from build
+- CubeIDE may exclude newly added folders from the build, to include it right click on the folder, go into Properties > C/C++ Build (on the left bar) > Select Configuration: `[All Configurations]` in the dropdown box, and then untick "Exclude Resource from Build"
+
+
