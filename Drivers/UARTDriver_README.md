@@ -3,8 +3,8 @@
 ## Usage
 ### 1 Changing STM32 UART Line from HAL to UART
 - First ensure the .ioc indicates the UART line is enabled
-- Second go to the **Project Manager** tab at the top, under UART select the UART lines you want to use the driver and change them to use the LL library.
-- Lastly ensure the UART Global Interrupt for any lines you want to use the driver for is enabled
+- (Note this was done in the Cube++ setup previously) Second go to the **Project Manager** tab at the top, under UART select the UART lines you want to use the driver and change them to use the LL library.
+- Lastly ensure the UART Global Interrupt for any lines you want to use the driver for is enabled (TODO: Add screenshot)
 
 ### 2 Defining and Initializing UART Driver Instances
 
