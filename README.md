@@ -97,8 +97,8 @@ An example project utilizing Cube++ with basic CUBE_PRINT support, in addition t
 	- SystemDefines.hpp : An example can be found [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/SystemDefines.hpp)
 	- main_system.cpp   : This can be named anything you want, but should contain the run_main() function that is the entry point for your codebase, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/main_system.cpp)
 	- main_system.hpp   : Header file for main_system.cpp, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/main_system.hpp)
-	- Components/Core/Inc/RunInterface.hpp : Header file for the run interface which allows C code to call into the C++ codebase without errors, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/Core/Inc/RunInterface.hpp)
-	- Components/Core/RunInterface.cpp : Code file for the run interface, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/Core/RunInterface.cpp)
+	- SysCore/Inc/RunInterface.hpp : Header file for the run interface which allows C code to call into the C++ codebase without errors, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/Core/Inc/RunInterface.hpp)
+	- SysCore/RunInterface.cpp : Code file for the run interface, example [here](https://github.com/cjchanx/cubeplusplus-examples/blob/main/Basic_Debug/Components/Core/RunInterface.cpp)
 - Setup Debug UART
 	- Setup one UART line as the UART debug line by following theinstructions uder Cube++/Drivers/UARTDriver_README.md, this should correspond to UART Driver linked to the 
 	`constexpr UARTDriver* const DEFAULT_DEBUG_UART_DRIVER = UART::Debug;` line that is required to be in the SystemDefines.hpp file
