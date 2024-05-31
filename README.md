@@ -90,7 +90,7 @@ Please ensure the following folders are not in the exclude from build option:
 - (none for this version)
 
 ### Codebase Setup
-An example project utilizing Cube++ with basic CUBE_PRINT support, in addition to a Debug receive task for parsing input data on the debug line can be found at https://github.com/cjchanx/cubeplusplus-examples/tree/main/Basic_Debug
+An example project utilizing Cube++ with basic SOAR_PRINT support, in addition to a Debug receive task for parsing input data on the debug line can be found at https://github.com/cjchanx/cubeplusplus-examples/tree/main/Basic_Debug
 
 - It is recommended to setup a new folder called `Components` or `Modules` in the root where all the code goes.
 - There are a few files that you should have in `Components`/`Modules`:

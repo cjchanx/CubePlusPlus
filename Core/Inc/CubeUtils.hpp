@@ -1,14 +1,14 @@
 /**
  ******************************************************************************
- * File Name          : Utils.hpp
- * Description        : Utility functions, accessible system wide.
+ * File Name          : CubeUtils.hpp
+ * Description        : CubeUtility functions, accessible system wide.
  *                Includes functions for converting between data types
  *                Use very specific naming, or a namespace to avoid conflicts
  *                Keep namespace Utils to avoid conflicts with other libraries
  ******************************************************************************
 */
-#ifndef CUBE_PLUSPLUS_INCLUDE_UTILS_HPP_
-#define CUBE_PLUSPLUS_INCLUDE_UTILS_HPP_
+#ifndef CUBE_PLUSPLUS_INCLUDE_CUBEUTILS_HPP_
+#define CUBE_PLUSPLUS_INCLUDE_CUBEUTILS_HPP_
 #include "cmsis_os.h"    // CMSIS RTOS definitions
 
 // Programmer Macros
@@ -64,4 +64,4 @@ namespace Utils
 }
 
 
-#endif    // CUBE_PLUSPLUS_INCLUDE_UTILS_HPP_
+#endif    // CUBE_PLUSPLUS_INCLUDE_CUBEUTILS_HPP_

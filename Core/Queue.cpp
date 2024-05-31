@@ -59,7 +59,7 @@ bool Queue::SendToFront(Command& command)
     if (xQueueSendToFront(rtQueueHandle, &command, DEFAULT_QUEUE_SEND_WAIT_TICKS) == pdPASS)
         return true;
 
-    CUBE_PRINT("Could not send data to front of queue!\n");
+    SOAR_PRINT("Could not send data to front of queue!\n");
     command.Reset();
 
     return false;
@@ -77,7 +77,7 @@ bool Queue::Send(Command& command)
 
     //TODO: It may be possible to have this automatically set the command to not free data externally as we've "passed" control of the data over, which might let us use a destructor to free the data
 
-    CUBE_PRINT("Could not send data to queue!\n");
+    SOAR_PRINT("Could not send data to queue!\n");
     command.Reset();
 
     return false;
