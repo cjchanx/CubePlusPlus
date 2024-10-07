@@ -131,8 +131,7 @@ An example project utilizing Cube++ with basic CUBE_PRINT support, in addition t
 -Wno-register
 -Wno-volatile
 ```
-- Right click the project in the project explorer > Properties > Expand C/C++ Build > Settings > Miscellaneous under MCU G++ Linker
-- Add the flags line-by-line under "Other Flags"
-<img src="https://github.com/user-attachments/assets/151a071f-eb5b-45ee-88f5-808d74a9689e" width="450">
+- Right click the project in the project explorer > Properties > Expand C/C++ Build > Settings > Miscellaneous under MCU G++ Compiler
+<img src="https://github.com/user-attachments/assets/2a83056c-2803-40c3-85aa-41dda7d9c48e" width="450">
 
 
